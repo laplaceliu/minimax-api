@@ -104,6 +104,7 @@ export interface VoiceGenerationInfo {
 // Delete Voice Request/Response
 export interface DeleteVoiceRequest {
   voice_id: string
+  voice_type?: string
 }
 
 export interface DeleteVoiceResponse {
