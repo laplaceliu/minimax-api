@@ -41,23 +41,35 @@ export interface VideoBaseResp {
   status_msg: string
 }
 
+// Subject Reference for S2V
+export interface SubjectReference {
+  type: 'character'
+  image: string[]
+}
+
 // Text-to-Video (T2V)
 export interface T2VRequest extends VideoGenerationRequest {}
 
 // Image-to-Video (I2V)
 export interface I2VRequest extends VideoGenerationRequest {
-  image_url?: string
-  image_base64?: string
+  first_frame_image: string
+}
+
+// Subject Reference for S2V
+export interface SubjectReference {
+  type: 'character'
+  image: string[]
 }
 
 // Subject-to-Video (S2V) - subject consistency video
 export interface S2VRequest extends VideoGenerationRequest {
-  subject_token?: string
+  subject_reference: SubjectReference[]
 }
 
 // First Letter Video (FL2V) - first letter consistency video
 export interface FL2VRequest extends VideoGenerationRequest {
-  subject_token?: string
+  first_frame_image: string
+  last_frame_image: string
 }
 
 // Video Download Response

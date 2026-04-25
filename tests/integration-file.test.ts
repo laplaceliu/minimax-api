@@ -110,4 +110,19 @@ describe('Integration: File Management API', () => {
     expect(deleteResponse.data.base_resp?.status_code).toBe(0)
     console.log('Delete status:', deleteResponse.data.base_resp?.status_msg)
   })
+
+  it('should retrieve file content', async () => {
+    const filePath = path.join(MISC_DIR, 'minimax-api-test.mp3')
+    const fileBuffer = fs.readFileSync(filePath)
+    const file = new File([fileBuffer], 'content_test.mp3', { type: 'audio/mpeg' })
+
+    const uploadResponse = await client.file.upload(file, 'voice_clone')
+    const fileId = uploadResponse.data.file?.file_id
+
+    const contentResponse = await client.file.retrieveContent(String(fileId))
+
+    expect(contentResponse.data.file_id).toBeDefined()
+    expect(contentResponse.data.content).toBeDefined()
+    console.log('Content retrieved, length:', contentResponse.data.content.byteLength)
+  })
 })

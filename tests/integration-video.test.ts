@@ -57,9 +57,12 @@ describe('Integration: Video Generation API', () => {
 
   it('should create S2V task', async () => {
     const response = await client.video.generateSubjectVideo({
-      model: 'MiniMax-Hailuo-2.3',
+      model: 'S2V-01',
       prompt: 'A person dancing',
-      subject_token: 'person_001'
+      subject_reference: [{
+        type: 'character',
+        image: ['https://www.example.com/person.jpg']
+      }]
     })
 
     expect(response.data.task_id).toBeDefined()
@@ -68,9 +71,10 @@ describe('Integration: Video Generation API', () => {
 
   it('should create FL2V task', async () => {
     const response = await client.video.generateFirstLetterVideo({
-      model: 'MiniMax-Hailuo-2.3',
+      model: 'MiniMax-Hailuo-02',
       prompt: 'A person reading a book',
-      subject_token: 'person_001'
+      first_frame_image: 'https://www.example.com/start.jpg',
+      last_frame_image: 'https://www.example.com/end.jpg'
     })
 
     expect(response.data.task_id).toBeDefined()
@@ -78,13 +82,23 @@ describe('Integration: Video Generation API', () => {
   })
 
   it('should download video file', async () => {
-    const response = await client.video.generateFromText({
+    // First create a video task
+    const createResponse = await client.video.generateFromText({
       model: 'MiniMax-Hailuo-2.3',
       prompt: 'A person reading a book',
       duration: 6
     })
 
-    expect(response.data.task_id).toBeDefined()
-    console.log('Task created for download test:', response.data.task_id)
+    expect(createResponse.data.task_id).toBeDefined()
+    console.log('Task created for download test:', createResponse.data.task_id)
+
+    // Query status to get file_id
+    const queryResponse = await client.video.query(createResponse.data.task_id!)
+    if (queryResponse.data.file_id) {
+      const downloadResponse = await client.video.download(queryResponse.data.file_id)
+      expect(downloadResponse.data.file).toBeDefined()
+      expect(downloadResponse.data.file?.download_url).toBeDefined()
+      console.log('Download URL:', downloadResponse.data.file?.download_url)
+    }
   })
 })

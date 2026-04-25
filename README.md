@@ -31,28 +31,28 @@ const response = await client.chat.createCompletion({
 | API | Endpoint | SDK Method | Integration Test |
 |-----|----------|-----------|----------------|
 | Chat Completion (OpenAI Compatible) | `POST /v1/chat/completions` | `chat.createCompletion()` | ✅ |
-| Streaming Chat (OpenAI Compatible) | `POST /v1/chat/completions` (stream) | `chat.createCompletionStream()` | ❌ |
+| Streaming Chat (OpenAI Compatible) | `POST /v1/chat/completions` (stream) | `chat.createCompletionStream()` | ⚠️ |
 | Message (Anthropic Compatible) | `POST /anthropic/v1/messages` | `chat.createMessage()` | ✅ |
-| Streaming Message (Anthropic Compatible) | `POST /anthropic/v1/messages` (stream) | `chat.createMessageStream()` | ❌ |
+| Streaming Message (Anthropic Compatible) | `POST /anthropic/v1/messages` (stream) | `chat.createMessageStream()` | ⚠️ |
 
 ### Speech (Text-to-Audio)
 
 | API | Endpoint | SDK Method | Integration Test |
 |-----|----------|-----------|----------------|
 | Sync TTS | `POST /v1/t2a_v2` | `speech.synthesize()` | ✅ |
-| Sync TTS (Streaming) | `POST /v1/t2a_v2` (stream) | `speech.synthesizeStream()` | ❌ |
+| Sync TTS (Streaming) | `POST /v1/t2a_v2` (stream) | `speech.synthesizeStream()` | ⚠️ |
 | Async TTS Create | `POST /v1/t2a_async_v2` | `speech.createAsyncTask()` | ✅ |
 | Async TTS Query | `GET /v1/query/t2a_async_query_v2` | `speech.queryAsyncTask()` | ✅ |
-| WebSocket TTS | `WSS /ws/v1/t2a_v2` | `speech.createWebSocketClient()` | ❌ |
+| WebSocket TTS | `WSS /ws/v1/t2a_v2` | `speech.createWebSocketClient()` | ⚠️ |
 
 ### Voice Management
 
 | API | Endpoint | SDK Method | Integration Test |
 |-----|----------|-----------|----------------|
-| Voice Clone | `POST /v1/voice_clone` | `voice.clone()` | ❌ |
-| Voice Design | `POST /v1/voice_design` | `voice.design()` | ❌ |
+| Voice Clone | `POST /v1/voice_clone` | `voice.clone()` | ✅ |
+| Voice Design | `POST /v1/voice_design` | `voice.design()` | ✅ |
 | Get Voice List | `POST /v1/get_voice` | `voice.list()` | ✅ |
-| Delete Voice | `POST /v1/delete_voice` | `voice.delete()` | ❌ |
+| Delete Voice | `POST /v1/delete_voice` | `voice.delete()` | ✅ |
 | Upload Prompt Audio | `POST /v1/files/upload` (purpose: prompt_audio) | `voice.uploadPrompt()` | ✅ |
 | Upload Clone Audio | `POST /v1/files/upload` (purpose: voice_clone) | `voice.uploadClone()` | ✅ |
 
@@ -61,11 +61,11 @@ const response = await client.chat.createCompletion({
 | API | Endpoint | SDK Method | Integration Test |
 |-----|----------|-----------|----------------|
 | Text-to-Video | `POST /v1/video_generation` | `video.generateFromText()` | ✅ |
-| Image-to-Video | `POST /v1/video_generation` | `video.generateFromImage()` | ❌ |
-| Subject-to-Video | `POST /v1/video_generation` | `video.generateSubjectVideo()` | ❌ |
-| First-Letter Video | `POST /v1/video_generation` | `video.generateFirstLetterVideo()` | ❌ |
-| Query Task | `GET /v1/query/video_generation` | `video.query()` | ❌ |
-| Download Video | `GET /v1/files/retrieve` | `video.download()` | ❌ |
+| Image-to-Video | `POST /v1/video_generation` | `video.generateFromImage()` | ✅ |
+| Subject-to-Video | `POST /v1/video_generation` | `video.generateSubjectVideo()` | ✅ |
+| First-Letter Video | `POST /v1/video_generation` | `video.generateFirstLetterVideo()` | ✅ |
+| Query Task | `GET /v1/query/video_generation` | `video.query()` | ✅ |
+| Download Video | `GET /v1/files/retrieve` | `video.download()` | ✅ |
 
 ### Image Generation
 
@@ -79,9 +79,9 @@ const response = await client.chat.createCompletion({
 | API | Endpoint | SDK Method | Integration Test |
 |-----|----------|-----------|----------------|
 | Music Generation | `POST /v1/music_generation` | `music.generate()` | ✅ |
-| Music Generation (Stream) | `POST /v1/music_generation` (stream) | `music.generateStream()` | ❌ |
+| Music Generation (Stream) | `POST /v1/music_generation` (stream) | `music.generateStream()` | ⚠️ |
 | Lyrics Generation | `POST /v1/lyrics_generation` | `music.generateLyrics()` | ✅ |
-| Music Cover Preprocess | `POST /v1/music_cover_preprocess` | `music.preprocessCover()` | ❌ |
+| Music Cover Preprocess | `POST /v1/music_cover_preprocess` | `music.preprocessCover()` | ✅ |
 
 ### File Management
 
@@ -90,23 +90,28 @@ const response = await client.chat.createCompletion({
 | Upload File | `POST /v1/files/upload` | `file.upload()` | ✅ |
 | List Files | `GET /v1/files/list` | `file.list()` | ✅ |
 | Retrieve File | `GET /v1/files/retrieve` | `file.retrieve()` | ✅ |
-| Retrieve File Content | `GET /v1/files/retrieve_content` | `file.retrieveContent()` | ❌ |
+| Retrieve File Content | `GET /v1/files/retrieve_content` | `file.retrieveContent()` | ✅ |
 | Delete File | `POST /v1/files/delete` | `file.delete()` | ✅ |
 
 ---
 
 ## Test Coverage Summary
 
-| Category | Total APIs | Implemented | Tested |
-|----------|-----------|-------------|--------|
-| Text Chat | 4 | 4 | 2 |
-| Speech (TTS) | 5 | 5 | 3 |
-| Voice Management | 6 | 6 | 3 |
-| Video Generation | 6 | 6 | 1 |
-| Image Generation | 2 | 2 | 2 |
-| Music Generation | 4 | 4 | 2 |
-| File Management | 5 | 5 | 4 |
-| **Total** | **32** | **32** | **17** |
+| Category | Total APIs | Fully Tested | Partially Tested | Not Tested |
+|----------|-----------|--------------|------------------|------------|
+| Text Chat | 4 | 2 | 2 | 0 |
+| Speech (TTS) | 5 | 3 | 2 | 0 |
+| Voice Management | 6 | 6 | 0 | 0 |
+| Video Generation | 6 | 6 | 0 | 0 |
+| Image Generation | 2 | 2 | 0 | 0 |
+| Music Generation | 4 | 3 | 1 | 0 |
+| File Management | 5 | 5 | 0 | 0 |
+| **Total** | **32** | **27** | **5** | **0** |
+
+> **Legend:**
+> - ✅ Fully Tested: API called with response validation
+> - ⚠️ Partially Tested: API called but limited validation (e.g., streaming only checks status)
+> - ❌ Not Tested: No integration test exists
 
 ---
 

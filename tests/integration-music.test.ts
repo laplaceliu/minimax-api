@@ -96,4 +96,14 @@ describe('Integration: Music Generation API', () => {
     const uploadResp = await client.file.upload(file, 'voice_clone')
     console.log('Cover uploaded:', uploadResp.data.file?.file_id)
   })
+
+  it('should preprocess music cover', async () => {
+    const response = await client.music.preprocessCover({
+      model: 'music-cover',
+      audio_url: 'https://www.example.com/sample-music.mp3'
+    })
+
+    expect(response.data.cover_feature_id).toBeDefined()
+    console.log('Cover feature ID:', response.data.cover_feature_id)
+  })
 })

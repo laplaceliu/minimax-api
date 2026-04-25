@@ -69,12 +69,16 @@ export interface LyricsGenerationResponse {
 
 // Music Cover Preprocess Request/Response
 export interface MusicCoverPreprocessRequest {
+  model: 'music-cover'
   audio_url?: string
   audio_base64?: string
 }
 
 export interface MusicCoverPreprocessResponse {
   cover_feature_id: string
-  lyrics?: string
+  formatted_lyrics?: string
+  structure_result?: string
+  audio_duration?: number
+  trace_id?: string
   base_resp: MusicBaseResp
 }

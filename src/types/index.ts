@@ -117,6 +117,7 @@ export {
   type I2VRequest,
   type S2VRequest,
   type FL2VRequest,
+  type SubjectReference,
   type VideoDownloadResponse,
   type VideoFileObject,
 } from './video'
