@@ -4,6 +4,8 @@
 
 export type FilePurpose = 'voice_clone' | 'prompt_audio' | 't2a_async_input'
 
+export type DeleteFilePurpose = 'voice_clone' | 'prompt_audio' | 't2a_async' | 't2a_async_input' | 'video_generation'
+
 // Upload File Response
 export interface UploadFileResponse {
   file: FileObject
@@ -15,7 +17,8 @@ export interface FileObject {
   bytes: number
   created_at: number
   filename: string
-  purpose: FilePurpose
+  purpose: FilePurpose | DeleteFilePurpose
+  download_url?: string
 }
 
 export interface FileBaseResp {
@@ -43,7 +46,14 @@ export interface RetrieveFileContentResponse {
   base_resp: FileBaseResp
 }
 
+// Delete File Request
+export interface DeleteFileRequest {
+  file_id: number
+  purpose: DeleteFilePurpose
+}
+
 // Delete File Response
 export interface DeleteFileResponse {
+  file_id?: number
   base_resp: FileBaseResp
 }

@@ -2,6 +2,8 @@
  * Voice Management API types
  */
 
+import type { LanguageBoost } from './speech'
+
 // Voice Clone Request/Response
 export interface VoiceCloneRequest {
   file_id: number
@@ -9,7 +11,7 @@ export interface VoiceCloneRequest {
   clone_prompt?: ClonePrompt
   text?: string
   model?: string
-  language_boost?: string
+  language_boost?: LanguageBoost
   need_noise_reduction?: boolean
   need_volume_normalization?: boolean
   aigc_watermark?: boolean
@@ -21,8 +23,9 @@ export interface ClonePrompt {
 }
 
 export interface VoiceCloneResponse {
-  input_sensitive?: boolean
-  input_sensitive_type?: number
+  input_sensitive?: {
+    type: number
+  }
   demo_audio?: string
   base_resp: VoiceCloneBaseResponse
 }
@@ -34,9 +37,10 @@ export interface VoiceCloneBaseResponse {
 
 // Voice Design Request/Response
 export interface VoiceDesignRequest {
-  description?: string
-  tags?: string[]
-  reference_audio?: VoiceDesignReferenceAudio
+  prompt: string
+  preview_text: string
+  voice_id?: string
+  aigc_watermark?: boolean
 }
 
 export interface VoiceDesignReferenceAudio {
@@ -46,9 +50,8 @@ export interface VoiceDesignReferenceAudio {
 }
 
 export interface VoiceDesignResponse {
-  task_id?: string
   voice_id?: string
-  voice_name?: string
+  trial_audio?: string
   base_resp: VoiceCloneBaseResponse
 }
 
@@ -58,7 +61,7 @@ export interface VoiceGenerationRequest {
   text: string
   voice_setting?: VoiceSetting
   audio_setting?: AudioSetting
-  language_boost?: string
+  language_boost?: LanguageBoost
 }
 
 export interface VoiceGenerationResponse {
@@ -103,11 +106,13 @@ export interface VoiceGenerationInfo {
 
 // Delete Voice Request/Response
 export interface DeleteVoiceRequest {
+  voice_type: 'voice_cloning' | 'voice_generation'
   voice_id: string
-  voice_type?: string
 }
 
 export interface DeleteVoiceResponse {
+  voice_id?: string
+  created_time?: string
   base_resp: VoiceCloneBaseResponse
 }
 

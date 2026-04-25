@@ -134,6 +134,7 @@ export {
   type ImageBaseResp,
   type T2IRequest,
   type I2IRequest,
+  type ImageSubjectReference,
 } from './image'
 
 // Re-export music types
@@ -153,10 +154,12 @@ export {
 // Re-export file types
 export {
   type FilePurpose,
+  type DeleteFilePurpose,
   type UploadFileResponse,
   type ListFilesResponse,
   type RetrieveFileResponse,
   type RetrieveFileContentResponse,
+  type DeleteFileRequest,
   type DeleteFileResponse,
 } from './file'
 

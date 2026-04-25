@@ -55,12 +55,6 @@ export interface I2VRequest extends VideoGenerationRequest {
   first_frame_image: string
 }
 
-// Subject Reference for S2V
-export interface SubjectReference {
-  type: 'character'
-  image: string[]
-}
-
 // Subject-to-Video (S2V) - subject consistency video
 export interface S2VRequest extends VideoGenerationRequest {
   subject_reference: SubjectReference[]
@@ -68,7 +62,7 @@ export interface S2VRequest extends VideoGenerationRequest {
 
 // First Letter Video (FL2V) - first letter consistency video
 export interface FL2VRequest extends VideoGenerationRequest {
-  first_frame_image: string
+  first_frame_image?: string
   last_frame_image: string
 }
 
@@ -84,4 +78,5 @@ export interface VideoFileObject {
   created_at: number
   filename: string
   purpose: string
+  download_url?: string
 }

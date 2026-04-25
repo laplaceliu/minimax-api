@@ -29,6 +29,7 @@ export interface ChatCompletionResponse {
   output_sensitive?: boolean
   input_sensitive_type?: number
   output_sensitive_type?: number
+  output_sensitive_int?: number
   base_resp?: BaseResp
 }
 
@@ -43,6 +44,7 @@ export interface ChatCompletionChunk {
   output_sensitive?: boolean
   input_sensitive_type?: number
   output_sensitive_type?: number
+  output_sensitive_int?: number
 }
 
 export interface ChatChoice {

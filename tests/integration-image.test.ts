@@ -48,7 +48,10 @@ describe('Integration: Image Generation API', () => {
     const response = await client.image.generateFromImage({
       model: 'image-01',
       prompt: 'Transform this into a watercolor painting style',
-      image_url: imageUrl
+      subject_reference: [{
+        type: 'character',
+        image_file: imageUrl!
+      }]
     })
 
     expect(response.data.id).toBeDefined()

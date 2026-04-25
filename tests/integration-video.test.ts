@@ -48,7 +48,7 @@ describe('Integration: Video Generation API', () => {
     const response = await client.video.generateFromImage({
       model: 'MiniMax-Hailuo-02',
       prompt: 'The person walking towards the camera',
-      image_url: `file://${imagePath}`
+      first_frame_image: `file://${imagePath}`
     })
 
     expect(response.data.task_id).toBeDefined()

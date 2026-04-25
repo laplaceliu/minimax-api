@@ -119,7 +119,7 @@ describe('Video Module', () => {
       const response = await client.video.generateFromImage({
         model: 'MiniMax-Hailuo-02',
         prompt: 'The person is walking',
-        image_url: 'https://example.com/person.jpg'
+        first_frame_image: 'https://example.com/person.jpg'
       })
 
       expect(response.data.task_id).toBe('i2v-task-456')

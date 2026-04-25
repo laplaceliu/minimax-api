@@ -177,13 +177,25 @@ const clone = await client.voice.clone({
   file_id: uploaded.data.file.file_id,
   voice_id: 'my-cloned-voice',
   text: 'Hello, this is a test.',
-  model: 'speech-2.8-hd'
+  model: 'speech-2.8-hd',
+  language_boost: 'auto'
 })
+```
+
+### Voice Design
+
+```typescript
+const voice = await client.voice.design({
+  prompt: 'A warm and friendly female voice',
+  preview_text: 'Hello, this is a test of the voice.'
+})
+// voice.data.voice_id can be used for synthesis
 ```
 
 ### Video Generation
 
 ```typescript
+// Text-to-Video
 const video = await client.video.generateFromText({
   model: 'MiniMax-Hailuo-2.3',
   prompt: 'A person walking in the park',
@@ -191,18 +203,61 @@ const video = await client.video.generateFromText({
   resolution: '1080P'
 })
 
-// Poll status
+// Image-to-Video
+const i2v = await client.video.generateFromImage({
+  model: 'MiniMax-Hailuo-02',
+  prompt: 'The person walking towards the camera',
+  first_frame_image: 'https://example.com/image.jpg'
+})
+
+// Subject-to-Video (S2V)
+const s2v = await client.video.generateSubjectVideo({
+  model: 'S2V-01',
+  prompt: 'A person dancing',
+  subject_reference: [{
+    type: 'character',
+    image: ['https://example.com/person.jpg']
+  }]
+})
+
+// First-Letter Video (FL2V)
+const fl2v = await client.video.generateFirstLetterVideo({
+  model: 'MiniMax-Hailuo-02',
+  prompt: 'A person reading a book',
+  first_frame_image: 'https://example.com/start.jpg',
+  last_frame_image: 'https://example.com/end.jpg'
+})
+
+// Query status
 const status = await client.video.query(video.data.task_id)
+
+// Download video
+const queryResult = await client.video.query(video.data.task_id)
+if (queryResult.data.file_id) {
+  const download = await client.video.download(queryResult.data.file_id)
+  console.log('Video URL:', download.data.file.download_url)
+}
 ```
 
 ### Image Generation
 
 ```typescript
+// Text-to-Image
 const image = await client.image.generateFromText({
   model: 'image-01',
   prompt: 'A beautiful sunset over the ocean',
   aspect_ratio: '16:9',
   n: 2
+})
+
+// Image-to-Image (with subject reference)
+const i2i = await client.image.generateFromImage({
+  model: 'image-01',
+  prompt: 'Transform into watercolor painting style',
+  subject_reference: [{
+    type: 'character',
+    image_file: 'https://example.com/person.jpg'
+  }]
 })
 ```
 
@@ -226,6 +281,13 @@ const lyrics = await client.music.generateLyrics({
   mode: 'write_full_song',
   prompt: 'A song about summer happiness'
 })
+
+// Music Cover Preprocess (two-step cover workflow)
+const preprocess = await client.music.preprocessCover({
+  model: 'music-cover',
+  audio_url: 'https://example.com/song.mp3'
+})
+// Use preprocess.data.cover_feature_id in music.generate() with model: 'music-cover'
 ```
 
 ### File Management
@@ -238,10 +300,10 @@ const uploaded = await client.file.upload(audioFile, 'voice_clone')
 const files = await client.file.list('voice_clone')
 
 // Retrieve
-const fileInfo = await client.file.retrieve(String(uploaded.data.file.file_id))
+const fileInfo = await client.file.retrieve(uploaded.data.file.file_id)
 
 // Delete
-await client.file.delete(String(uploaded.data.file.file_id))
+await client.file.delete(uploaded.data.file.file_id, 'voice_clone')
 ```
 
 ---

@@ -122,7 +122,10 @@ describe('Image Module', () => {
       const response = await client.image.generateFromImage({
         model: 'image-01',
         prompt: 'Transform to watercolor style',
-        image_url: 'https://example.com/original.jpg'
+        subject_reference: [{
+          type: 'character',
+          image_file: 'https://example.com/original.jpg'
+        }]
       })
 
       expect(response.data.id).toBe('i2i-789')

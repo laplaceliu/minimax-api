@@ -36,10 +36,7 @@ export class VideoModule {
   async generateFromImage(
     request: I2VRequest
   ): Promise<HttpResponse<VideoGenerationResponse>> {
-    return this.http.post<VideoGenerationResponse>('/v1/video_generation', {
-      ...request,
-      model: request.model || 'MiniMax-Hailuo-02',
-    })
+    return this.http.post<VideoGenerationResponse>('/v1/video_generation', request)
   }
 
   /**
@@ -77,7 +74,7 @@ export class VideoModule {
    * @see https://platform.minimaxi.com/docs/api-reference/video-generation-download
    */
   async download(
-    fileId: string
+    fileId: string | number
   ): Promise<HttpResponse<VideoDownloadResponse>> {
     return this.http.get<VideoDownloadResponse>(`/v1/files/retrieve?file_id=${fileId}`)
   }

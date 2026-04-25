@@ -88,7 +88,7 @@ describe('Integration: File Management API', () => {
     const uploadResponse = await client.file.upload(file, 'voice_clone')
     const fileId = uploadResponse.data.file?.file_id
 
-    const retrieveResponse = await client.file.retrieve(String(fileId))
+    const retrieveResponse = await client.file.retrieve(fileId!)
 
     expect(retrieveResponse.data.file).toBeDefined()
     expect(retrieveResponse.data.file?.file_id).toBe(fileId)
@@ -104,10 +104,11 @@ describe('Integration: File Management API', () => {
     const uploadResponse = await client.file.upload(file, 'voice_clone')
     const fileId = uploadResponse.data.file?.file_id
 
-    const deleteResponse = await client.file.delete(String(fileId))
+    const deleteResponse = await client.file.delete(fileId!, 'voice_clone')
 
     expect(deleteResponse.data.base_resp).toBeDefined()
     expect(deleteResponse.data.base_resp?.status_code).toBe(0)
+    expect(deleteResponse.data.file_id).toBeDefined()
     console.log('Delete status:', deleteResponse.data.base_resp?.status_msg)
   })
 
@@ -119,7 +120,7 @@ describe('Integration: File Management API', () => {
     const uploadResponse = await client.file.upload(file, 'voice_clone')
     const fileId = uploadResponse.data.file?.file_id
 
-    const contentResponse = await client.file.retrieveContent(String(fileId))
+    const contentResponse = await client.file.retrieveContent(fileId!)
 
     expect(contentResponse.data.file_id).toBeDefined()
     expect(contentResponse.data.content).toBeDefined()

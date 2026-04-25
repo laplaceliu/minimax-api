@@ -10,6 +10,7 @@ import {
   RetrieveFileContentResponse,
   DeleteFileResponse,
   FilePurpose,
+  DeleteFilePurpose,
 } from '../types/file'
 
 /**
@@ -63,7 +64,7 @@ export class FileModule {
    * @see https://platform.minimaxi.com/docs/api-reference/file-management-retrieve
    */
   async retrieve(
-    fileId: string
+    fileId: string | number
   ): Promise<HttpResponse<RetrieveFileResponse>> {
     return this.http.get<RetrieveFileResponse>(`/v1/files/retrieve?file_id=${fileId}`)
   }
@@ -73,7 +74,7 @@ export class FileModule {
    * @see https://platform.minimaxi.com/docs/api-reference/file-management-retrieve-content
    */
   async retrieveContent(
-    fileId: string
+    fileId: string | number
   ): Promise<HttpResponse<RetrieveFileContentResponse>> {
     return this.http.get<RetrieveFileContentResponse>(`/v1/files/retrieve_content?file_id=${fileId}`)
   }
@@ -83,10 +84,12 @@ export class FileModule {
    * @see https://platform.minimaxi.com/docs/api-reference/file-management-delete
    */
   async delete(
-    fileId: string
+    fileId: string | number,
+    purpose: DeleteFilePurpose
   ): Promise<HttpResponse<DeleteFileResponse>> {
-    const formData = new FormData()
-    formData.append('file_id', fileId)
-    return this.http.uploadFile<DeleteFileResponse>('/v1/files/delete', formData)
+    return this.http.post<DeleteFileResponse>('/v1/files/delete', {
+      file_id: fileId,
+      purpose,
+    })
   }
 }

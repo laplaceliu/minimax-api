@@ -86,8 +86,8 @@ describe('Integration: Voice Management API', () => {
 
   it('should design voice', async () => {
     const response = await client.voice.design({
-      description: 'A warm and friendly female voice',
-      tags: ['female', 'warm', 'friendly']
+      prompt: 'A warm and friendly female voice',
+      preview_text: 'Hello, this is a test of the voice.'
     })
 
     expect(response.data.base_resp).toBeDefined()
@@ -97,7 +97,8 @@ describe('Integration: Voice Management API', () => {
 
   it('should delete voice', async () => {
     const designResponse = await client.voice.design({
-      description: 'Voice to be deleted'
+      prompt: 'Voice to be deleted',
+      preview_text: 'This voice will be deleted.'
     })
 
     const voiceId = (designResponse.data as any)?.voice_id

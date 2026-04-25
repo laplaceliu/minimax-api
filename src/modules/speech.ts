@@ -63,7 +63,7 @@ export class SpeechModule {
    * @see https://platform.minimaxi.com/docs/api-reference/speech-t2a-async-query
    */
   async queryAsyncTask(
-    taskId: string
+    taskId: string | number
   ): Promise<HttpResponse<T2AAsyncQueryResponse>> {
     return this.http.get<T2AAsyncQueryResponse>(`/v1/query/t2a_async_query_v2?task_id=${taskId}`)
   }

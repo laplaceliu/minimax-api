@@ -10,6 +10,8 @@ export interface VoiceSetting {
   pitch?: number
   emotion?: SpeechEmotion
   english_normalization?: boolean
+  text_normalization?: boolean
+  latex_read?: boolean
 }
 
 export type SpeechEmotion = 
@@ -194,7 +196,7 @@ export interface T2AAsyncQueryResponse {
   base_resp: T2ABaseResp
 }
 
-export type T2AAsyncStatus = 'Pending' | 'Processing' | 'Success' | 'Failed'
+export type T2AAsyncStatus = 'Processing' | 'Success' | 'Failed' | 'Expired'
 
 // WebSocket T2A Events
 export interface T2AWebSocketStartEvent {
@@ -212,7 +214,7 @@ export interface T2AWebSocketStartEvent {
 
 export interface T2AWebSocketContinueEvent {
   event: 'task_continue'
-  text?: string
+  text: string
 }
 
 export interface T2AWebSocketFinishEvent {

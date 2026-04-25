@@ -53,8 +53,13 @@ export interface ImageBaseResp {
 // Text-to-Image (T2I)
 export interface T2IRequest extends ImageGenerationRequest {}
 
+// Image Subject Reference for I2I
+export interface ImageSubjectReference {
+  type: 'character'
+  image_file: string
+}
+
 // Image-to-Image (I2I)
 export interface I2IRequest extends ImageGenerationRequest {
-  image_url?: string
-  image_base64?: string
+  subject_reference?: ImageSubjectReference[]
 }

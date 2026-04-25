@@ -37,7 +37,7 @@ export class ImageModule {
 
   /**
    * Generate image (unified interface)
-   * Automatically detects request type based on presence of image_url or image_base64
+   * Automatically detects request type based on presence of subject_reference
    */
   async generate(
     request: T2IRequest | I2IRequest
